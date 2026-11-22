@@ -18,6 +18,7 @@ Alternativas:
 ```bash
 python main.py --replicas 100   # prueba rápida
 python validacion.py           # comprueba los balances y las fórmulas
+python -m unittest -v test_app # prueba la interfaz con Streamlit AppTest
 streamlit run app.py           # interfaz para presentar el trabajo
 ```
 
@@ -54,7 +55,7 @@ Al empezar cada mañana, el dueño decide **Q = número de panes a hornear**. La
 |---|---:|
 | Producto | Pan artesanal individual |
 | Demanda base | 110 panes/día (antes del factor semanal) |
-| Desviación de demanda | 24 panes/día |
+| Desviación estándar de demanda | 24 panes/día de base. Se multiplica por el factor del día, igual que la media. El coeficiente de variación es constante (≈ 21,8 %) y el sábado σ ≈ 32,4 panes/día. |
 | Factores lunes a domingo | 0,85; 0,90; 0,95; 1,00; 1,10; 1,35; 1,20 |
 | Precio por unidad (P) | $3.500 COP |
 | Costo variable de producción (C) | $1.500 COP |
@@ -146,15 +147,15 @@ Al finalizar todas las réplicas:
 - **Tasa de desperdicio:** `panes desechados / panes horneados`.
 - **Ventas perdidas:** clientes que pidieron panes y no pudieron comprarlos.
 - **Riesgo de pérdida:** porcentaje de años simulados en los que la ganancia fue negativa.
-- **IC al 95%:** aproximación normal de la incertidumbre del estimador de ganancia media, calculada a partir de réplicas independientes.
+- **IC al 95%**. El resumen de ganancias usa t de Student entre 2 y 99 réplicas independientes y la aproximación normal a partir de 100.
 
 ## 8. Experimentos
 
 1. **Comparación base:** se simulan los mismos 365 días de demanda para cada política, repetidos durante 500 réplicas independientes.
 2. **Comparación pareada:** se compara la diferencia de ganancia entre la mejor y cada otra política, usando la misma réplica de demanda.
-3. **Sensibilidad:** se modifica el costo extra de desechar un pan de $0 a $1.000, recalculando las políticas para cada costo.
+3. **Sensibilidad**. Se modifica el costo extra de desechar un pan de $0 a $1.000 y se recalculan las políticas para cada costo. La tabla muestra la ventaja media de D sobre B.
 4. **Pico no previsto:** la demanda aumenta 30% sin modificar las decisiones calculadas inicialmente.
-5. **Replanificación:** después de conocer el incremento, se actualiza el pronóstico y se calculan nuevos Q.
+5. **Replanificación**. Después de conocer el incremento, se actualiza el pronóstico y se calculan nuevos Q. La gráfica 06 muestra cuánto cambia la ganancia media de cada política con respecto al experimento 4.
 
 **Nota sobre el experimento 5:** el generador utiliza la misma distribución de demanda elevada en ambos experimentos y conserva las semillas. Por diferencias de redondeo de coma flotante, los valores diarios pueden no coincidir exactamente; la diferencia importante es el pronóstico utilizado para tomar la decisión.
 

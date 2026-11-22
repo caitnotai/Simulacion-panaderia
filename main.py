@@ -99,7 +99,7 @@ def main():
         graficas.grafica_ganancias(resumen, RESULTADOS),
         graficas.grafica_riesgo(resultados, RESULTADOS),
         graficas.grafica_desperdicio_faltantes(resumen, RESULTADOS),
-        graficas.grafica_pico(resumen, resumen_pico, RESULTADOS),
+        graficas.grafica_pico(resumen_pico, resumen_ajustado, RESULTADOS),
         graficas.grafica_ejemplo(ejemplos, mejor, RESULTADOS),
     ]
     titulo('CONCLUSIONES DEL EXPERIMENTO')

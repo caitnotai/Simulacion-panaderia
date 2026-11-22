@@ -1,6 +1,6 @@
-﻿Costo desecho por pan (COP),Fractil crítico,Q Newsvendor global,Q Newsvendor sábado,Mejor política,Ganancia mejor (M COP),Desperdicio mejor (%)
-0,0.5714,118,154,D. Newsvendor semanal,47.9462,10.366
-150,0.5479,116,152,D. Newsvendor semanal,47.2817,9.7665
-300,0.5263,115,151,D. Newsvendor semanal,46.6624,9.3404
-600,0.4878,112,148,D. Newsvendor semanal,45.529,8.4182
-1000,0.4444,108,144,D. Newsvendor semanal,44.206,7.4984
+﻿Costo desecho por pan (COP),Fractil crítico,Q Newsvendor global,Q Newsvendor sábado,Mejor política,Ganancia mejor (M COP),Ventaja media de D sobre B (M COP),Desperdicio mejor (%)
+0,0.5714,118,154,D. Newsvendor semanal,47.9462,0.2292,10.366
+150,0.5479,116,152,D. Newsvendor semanal,47.2817,0.1124,9.7665
+300,0.5263,115,151,D. Newsvendor semanal,46.6624,0.0406,9.3404
+600,0.4878,112,148,D. Newsvendor semanal,45.529,0.0025,8.4182
+1000,0.4444,108,144,D. Newsvendor semanal,44.206,0.1399,7.4984

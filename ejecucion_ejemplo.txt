@@ -44,12 +44,12 @@ C. Newsvendor global                              3.185                    3.143
 =====================================================================================
 EXPERIMENTO 3 | IMPACTO DEL COSTO DE DESECHO
 =====================================================================================
- Costo desecho por pan (COP)  Fractil crítico  Q Newsvendor global  Q Newsvendor sábado        Mejor política  Ganancia mejor (M COP)  Desperdicio mejor (%)
-                           0            0.571                  118                  154 D. Newsvendor semanal                  47.946                 10.366
-                         150            0.548                  116                  152 D. Newsvendor semanal                  47.282                  9.767
-                         300            0.526                  115                  151 D. Newsvendor semanal                  46.662                  9.340
-                         600            0.488                  112                  148 D. Newsvendor semanal                  45.529                  8.418
-                        1000            0.444                  108                  144 D. Newsvendor semanal                  44.206                  7.498
+ Costo desecho por pan (COP)  Fractil crítico  Q Newsvendor global  Q Newsvendor sábado        Mejor política  Ganancia mejor (M COP)  Ventaja media de D sobre B (M COP)  Desperdicio mejor (%)
+                           0            0.571                  118                  154 D. Newsvendor semanal                  47.946                               0.229                 10.366
+                         150            0.548                  116                  152 D. Newsvendor semanal                  47.282                               0.112                  9.767
+                         300            0.526                  115                  151 D. Newsvendor semanal                  46.662                               0.041                  9.340
+                         600            0.488                  112                  148 D. Newsvendor semanal                  45.529                               0.003                  8.418
+                        1000            0.444                  108                  144 D. Newsvendor semanal                  44.206                               0.140                  7.498
 
 =====================================================================================
 EXPERIMENTO 4 | DEMANDA 30% SUPERIOR A LA PREVISTA

@@ -22,12 +22,18 @@ with st.sidebar:
         fin_semana = st.checkbox('Mayor demanda el fin de semana', value=True)
         pico = st.checkbox('Simular un pico inesperado (+30%)', value=False)
     with st.expander('Costos (COP)', expanded=True):
-        precio = st.number_input('Precio por pan', 1000, 20000, 3500, 100)
-        costo = st.number_input('Costo de hacer un pan', 100, int(precio) - 1,
-                                min(1500, int(precio) - 1), 100)
+        precio = st.number_input('Precio por pan', 1000, 20000, 3500, 100, key='precio')
+        # Un nuevo máximo cambia la identidad del widget aunque conserve su clave.
+        costo_maximo = int(precio) - 1
+        st.session_state.costo = min(st.session_state.get('costo', 1500), costo_maximo)
+        costo = st.number_input('Costo de hacer un pan', min_value=100, max_value=costo_maximo,
+                                step=100, key='costo')
         desecho = st.number_input('Costo extra de botar un pan', 0, 5000, 150, 50)
         fijo = st.number_input('Gastos fijos por día', 0, 500000, 65000, 5000)
-        rescate = st.number_input('Valor recuperado por pan sobrante', 0, int(costo), 0, 50)
+        rescate_maximo = int(costo) - 1
+        st.session_state.rescate = min(st.session_state.get('rescate', 0), rescate_maximo)
+        rescate = st.number_input('Valor recuperado por pan sobrante', min_value=0,
+                                  max_value=rescate_maximo, step=50, key='rescate')
         penalizacion = st.number_input('Penalización adicional por venta perdida', 0, 5000, 0, 100)
     with st.expander('Experimento', expanded=False):
         fijo_q = st.slider('Panes diarios: política fija A', 0, 400, 110, 5)
@@ -36,14 +42,18 @@ with st.sidebar:
         semilla = st.number_input('Semilla aleatoria', 0, 999999, 2026)
 
 factores = (0.85, 0.90, 0.95, 1.0, 1.10, 1.35, 1.20) if fin_semana else (1,) * 7
-p = ParametrosCaso().con_cambios(
-    demanda_media=float(media), demanda_desviacion=float(desviacion),
-    factores_semana=tuple(factores), precio_venta=float(precio),
-    costo_produccion=float(costo), costo_desecho=float(desecho),
-    costo_fijo_diario=float(fijo), valor_rescate=float(rescate),
-    penalizacion_faltante=float(penalizacion), horneado_fijo=int(fijo_q),
-    dias_simulacion=int(dias), replicas=int(replicas), semilla=int(semilla),
-)
+try:
+    p = ParametrosCaso().con_cambios(
+        demanda_media=float(media), demanda_desviacion=float(desviacion),
+        factores_semana=tuple(factores), precio_venta=float(precio),
+        costo_produccion=float(costo), costo_desecho=float(desecho),
+        costo_fijo_diario=float(fijo), valor_rescate=float(rescate),
+        penalizacion_faltante=float(penalizacion), horneado_fijo=int(fijo_q),
+        dias_simulacion=int(dias), replicas=int(replicas), semilla=int(semilla),
+    )
+except ValueError as e:
+    st.error(f'Parámetros inválidos: {e}')
+    st.stop()
 politicas = construir_politicas(p)
 
 @st.cache_data(show_spinner=False)

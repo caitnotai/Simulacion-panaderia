@@ -6,6 +6,7 @@ NO reentrenamos las políticas usando demandas futuras de evaluación.
 from collections.abc import Sequence
 import numpy as np
 import pandas as pd
+from scipy.stats import t
 from parametros import ParametrosCaso
 from aleatoriedad import generar_escenario
 from politicas import Politica, construir_politicas
@@ -44,7 +45,8 @@ def tabla_resumen(resultados: dict[str, pd.DataFrame]) -> pd.DataFrame:
     for nombre, df in resultados.items():
         n = len(df)
         desvest = df['ganancia'].std(ddof=1) if n > 1 else 0.0
-        semiancho = 1.96 * desvest / np.sqrt(n)  # IC normal aproximado
+        valor_critico = t.ppf(0.975, df=n - 1) if 1 < n < 100 else 1.96
+        semiancho = valor_critico * desvest / np.sqrt(n)
         lista.append({
             'Política': nombre,
             'Ganancia media (M COP)': df['ganancia'].mean() / 1e6,
@@ -94,16 +96,19 @@ def analizar_sensibilidad(p: ParametrosCaso, replicas: int = 150) -> pd.DataFram
     for costo in (0, 150, 300, 600, 1000):
         ps = p.con_cambios(costo_desecho=float(costo), replicas=min(replicas, p.replicas))
         pols = construir_politicas(ps)
+        _, pol_b, pol_c, pol_d = pols
         res, _ = correr_montecarlo(ps, pols, guardar_ejemplo=False)
         resumen = tabla_resumen(res)
         mejor = resumen.index[0]
+        ganancias = resumen['Ganancia media (M COP)']
         filas.append({
             'Costo desecho por pan (COP)': costo,
             'Fractil crítico': ps.fractil_critico,
-            'Q Newsvendor global': pols[2].horneado_semana[0],
-            'Q Newsvendor sábado': pols[3].horneado_semana[5],
+            'Q Newsvendor global': pol_c.horneado_semana[0],
+            'Q Newsvendor sábado': pol_d.horneado_semana[5],
             'Mejor política': mejor,
-            'Ganancia mejor (M COP)': resumen.iloc[0]['Ganancia media (M COP)'],
+            'Ganancia mejor (M COP)': ganancias[mejor],
+            'Ventaja media de D sobre B (M COP)': ganancias[pol_d.nombre] - ganancias[pol_b.nombre],
             'Desperdicio mejor (%)': resumen.iloc[0]['Desperdicio (%)'],
         })
     return pd.DataFrame(filas)
