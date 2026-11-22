@@ -1,0 +1,5 @@
+﻿Política,Ganancia media (M COP),IC 95% inferior (M COP),IC 95% superior (M COP),Ingresos (M COP),Costo producción (M COP),Costo desecho (M COP),Panes horneados,Panes vendidos,Panes desechados,Ventas perdidas,Fill rate (%),Desperdicio (%),Prob. año con pérdida (%),Días con faltante
+D. Newsvendor semanal,47.2962,47.2006,47.3918,136.4595,64.806,0.6323,43204.0,38988.44,4215.56,3169.654,92.4815,9.7573,0.0,162.834
+B. Demanda promedio,47.1919,47.1024,47.2813,134.6286,63.165,0.5467,42110.0,38465.302,3644.698,3692.792,91.2406,8.6552,0.0,180.188
+C. Newsvendor global,44.1109,44.0207,44.201,132.0381,63.51,0.6922,42340.0,37725.172,4614.828,4432.922,89.485,10.8995,0.0,163.632
+A. Producción fija,43.7777,43.6973,43.8581,128.2536,60.225,0.5259,40150.0,36643.896,3506.104,5514.198,86.9202,8.7325,0.0,192.3
